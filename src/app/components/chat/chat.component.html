@@ -1,0 +1,14 @@
+<div fxLayout="column" fxLayoutAlign="center center" style="height: 90%;border-radius: 4px 4px 4px 4px;border: 1px solid rgba(255, 255, 255, 0.12);">
+
+
+    <app-chat-header style="width: 100%;" [receiverName]="receiverName" fxFlex="64px"></app-chat-header>
+
+    <div fxLayout="column" style="width: 100%; overflow-y: scroll; background-color: lightgray; box-shadow: inset 0px 0px 10px rgba(0,0,0,0.5);">
+
+        <ng-container *ngFor="let msg of messages; trackBy: trackByCreated; let i = index">
+            <app-chat-message [message]="msg" [previousMessage]="i - 1 >= 0 ? this.messages[i - 1] : null" [user]="loggedInUser()"></app-chat-message>
+        </ng-container>
+
+    </div>
+    <app-chat-controls style="width: 100%;"></app-chat-controls>
+</div>

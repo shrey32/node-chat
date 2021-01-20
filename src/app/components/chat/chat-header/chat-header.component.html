@@ -1,0 +1,9 @@
+<mat-toolbar color="primary" fxLayout="row">
+
+    <div mat-card-avatar fxLayoutAlign="start center" fxFlex="10">
+        <img src="{{selectedRecentlyMessagedUser.getAvatar()}}" alt="{{selectedRecentlyMessagedUser.getAvatar()}}" style="width:50px;height:50px;"></div>
+    <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle>-->
+    <div fxLayoutAlign='start center'>
+        <mat-title>{{selectedRecentlyMessagedUser.getFullName()}}</mat-title>
+    </div>
+</mat-toolbar>

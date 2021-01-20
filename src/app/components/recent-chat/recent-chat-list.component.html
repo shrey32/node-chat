@@ -1,0 +1,34 @@
+<div fxLayout="column" style="border:1px solid rgba(255, 255, 255, 0.12);">
+
+    <div fxLayoutAlign="center center" style="background:#c2185b;">
+        <mat-label>Recent Messages</mat-label>
+    </div>
+
+    <div matRipple *ngFor="let recentMsg of recentMessagedUserList" style="margin-top:5px;">
+        <div fxLayout="row" (click)="onSelect(recentMsg)" style="margin-bottom:5px;">
+            <div fxFlex="3"></div>
+            <div fxFlex="15">
+                <div mat-card-avatar fxLayoutAlign="start center">
+                    <img src="{{recentMsg.getAvatar()}}" alt="{{recentMsg.getAvatar()}}" style="width:50px;height:50px;"></div>
+                <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle>-->
+            </div>
+            <div fxLayoutAlign='start center'>
+                <mat-title>{{recentMsg.getFullName()}}</mat-title>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+    </div>
+    <div fxLayoutAlign="center center" color="primary">
+        <mat-label>Recent Groups</mat-label>
+    </div>
+    <div *ngIf="recentGroups.length>0" fxFlex="50">
+        <div matRipple *ngFor="let recentMsg of recentMessagedUserList">
+
+        </div>
+    </div>
+    <div *ngIf="recentGroups.length==0" matRipple fxFlex="50">
+        <div fxLayoutAlign="center center">
+            <mat-label>No Recent Groups, click to create</mat-label>
+        </div>
+    </div>
+</div>
