@@ -1,36 +1,11 @@
-<div fxLayout="column" style="margin:10px;border-radius: 4px 4px 4px 4px;border: 1px solid rgba(255, 255, 255, 0.12);">
-
-
-    <div fxFlex="80">
-        <div fxLayoutAlign="center center" *ngIf="messageList.length==0">
-            <mat-title>No new message...</mat-title>
+<div style="height:100%;">
+    <app-header></app-header>
+    <div fxLayout="row" style="height:100%;">
+        <div fxFlex="30">
+            <app-recent-chat-list></app-recent-chat-list>
         </div>
-        <div *ngIf="messageList.length>0">
-            <div *ngFor="let msg of messageList">
-                <div fxLayout="row" fxLayoutAlign="start" *ngIf="!msg.isMine()" style="margin-left: 20px;">
-                    <mat-card>
-                        <mat-label>{{msg.getMessage()}}</mat-label>
-
-                    </mat-card>
-                </div>
-                <div fxLayout="row" fxLayoutAlign="end" *ngIf="msg.isMine()" style="margin-right: 20px;">
-                    <mat-card>
-                        <mat-label>{{msg.getMessage()}}</mat-label>
-                    </mat-card>
-                </div>
-            </div>
+        <div fxFlex="70">
+            <app-chat></app-chat>
         </div>
-    </div>
-    <div fxFlex="10"></div>
-    <div fxFlex="10" class="footer" fxLayout="row" fxLayoutAlign="start center" appearance="bottom">
-        <div fxFlex="5"></div>
-        <mat-form-field fxFlex="80">
-            <input matInput placeholder="Say Hello!" [(ngModel)]="message">
-        </mat-form-field>
-        <div fxFlex="2"></div>
-        <div fxFlex="10">
-            <button mat-raised-button color="primary" (click)="send()"><mat-icon aria-label="Send Message">send</mat-icon></button>
-        </div>
-        <div fxFlex="5"></div>
     </div>
 </div>
