@@ -1,4 +1,5 @@
-import { RecentlyMessagedUser } from '../../models/recent-messaged-users';
+import { ChatService } from './../../services/chat.service';
+import { RecentChat } from '../../models/recent-chat';
 import { MessageService } from '../../services/message.service';
 
 
@@ -11,22 +12,22 @@ import { Component, OnInit } from "@angular/core";
 })
 export class RecentChatListComponent implements OnInit {
 
-  recentMessagedUserList: RecentlyMessagedUser[] = [];
+  recentChatList: RecentChat[] = [];
   recentGroups: [] = [];
 
-  constructor(public messageService: MessageService) {
+  constructor(public chatService: ChatService) {
 
   }
 
   ngOnInit(): void {
-    this.recentMessagedUserList = this.messageService.getRecentlyMessagedUsers();
-    if (this.recentMessagedUserList.length > 0) {
-      this.messageService.setSelectedRecentMessageUser(this.recentMessagedUserList[0]);
+    this.recentChatList = this.chatService.getRecentChatList();
+    if (this.recentChatList.length > 0) {
+      this.chatService.setSelectedRecentChat(this.recentChatList[0]);
     }
   }
 
-  onSelect = (recentlyMessagedUser: RecentlyMessagedUser): void => {
-    this.messageService.setSelectedRecentMessageUser(recentlyMessagedUser);
+  onSelect = (recentChat: RecentChat): void => {
+    this.chatService.setSelectedRecentChat(recentChat);
   }
 
 }

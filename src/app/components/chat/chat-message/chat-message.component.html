@@ -11,7 +11,7 @@
         'margin-bottom': '8px',
         'flex-direction': message.isMine() ? 'row-reverse' : 'row'
       }">
-            <img mat-card-avatar src="{{message.isMine()?loggedInUser.getAvatar():receiver.getAvatar()}}" width="50px" />
+            <img mat-card-avatar src="{{message.isMine()?loggedInUser.getAvatar():receiver.getUser().getAvatar()}}" width="50px" />
             <!--<mat-card-title *ngIf="!(isPredecessorSameAuthor())" style="font-size: 16px; margin-bottom: 6px;">
                 {{ loggedInUser.getFullName() }}
             </mat-card-title>-->
@@ -47,7 +47,7 @@
       </button>
 
             <!-- Attached files -->
-            <mat-chip-list [ngStyle]="{
+            <!--<mat-chip-list [ngStyle]="{
           display: 'flex',
           'justify-content': message.isMine() ? 'flex-end' : 'flex-start'
         }">
@@ -55,7 +55,7 @@
                     <mat-icon>insert_drive_file</mat-icon>
                     {{ attachment.name }}
                 </mat-chip>
-            </mat-chip-list>
+            </mat-chip-list>-->
         </mat-card-content>
     </mat-card>
 </div>

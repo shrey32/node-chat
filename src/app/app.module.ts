@@ -2,7 +2,7 @@ import { ChatControlsComponent } from './components/chat/chat-controls/chat-cont
 import { ChatHeaderComponent } from './components/chat/chat-header/chat-header.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { MessageService } from './services/message.service';
-import { MemberUserService } from './services/member-user.service';
+import { UserService } from './services/user.service';
 import { LoggedInUserService } from './services/logged-in-user.service';
 import { RecentChatListComponent } from './components/recent-chat/recent-chat-list.component';
 
@@ -20,6 +20,7 @@ import { AppComponent } from './app.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ChatMessageComponent } from './components/chat/chat-message/chat-message.component';
+import { ChatService } from './services/chat.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,8 +45,9 @@ import { ChatMessageComponent } from './components/chat/chat-message/chat-messag
   providers: [
     SocketService,
     LoggedInUserService,
-    MemberUserService,
-    MessageService
+    UserService,
+    MessageService,
+    ChatService
   ],
   bootstrap: [AppComponent],
 })

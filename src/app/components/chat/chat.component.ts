@@ -1,4 +1,5 @@
-import { RecentlyMessagedUser } from './../../models/recent-messaged-users';
+import { ChatService } from './../../services/chat.service';
+import { RecentChat } from '../../models/recent-chat';
 import { ChatListener } from './../../models/chat.listener';
 import { SocketService } from 'src/app/services/socket.service';
 import { MessageService } from './../../services/message.service';
@@ -10,13 +11,13 @@ import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-chat',
-  templateUrl: './chat.component.html'
+  templateUrl: 'chat.component.html'
 })
-export class ChatComponent implements OnInit, ChatListener {
+export class ChatComponent implements OnInit {
 
   senderName: string = '';
   receiverName: string = '';
-  selectedRecentMessagedUser: RecentlyMessagedUser = <RecentlyMessagedUser>{};
+  selectedRecentChat: RecentChat = <RecentChat>{};
   messages: Message[] = [];
   messageText: string = '';
   message: Message = <Message>{};
@@ -24,21 +25,24 @@ export class ChatComponent implements OnInit, ChatListener {
   constructor(
     public loggedInUserService: LoggedInUserService,
     public messageService: MessageService,
-    public socketService: SocketService
+    public chatService: ChatService
   ) { }
 
   ngOnInit() {
     this.init();
-    this.messageService.onRecentMessageUserSelection.subscribe((rmu: RecentlyMessagedUser) => {
+    this.chatService.onRecentChatSelection.subscribe((recentChat: RecentChat) => {
       this.init();
     });
   }
 
   init = (): void => {
-    this.selectedRecentMessagedUser = this.messageService.getSelectedRecentMessageUser();
+    this.selectedRecentChat = this.chatService.getSelectedRecentChat();
     this.senderName = this.loggedInUser().getFullName();
-    this.receiverName = this.selectedRecentMessagedUser.getFullName();
+    this.receiverName = this.selectedRecentChat.getUser().getFullName();
     this.messages = this.getMessages();
+    this.chatService.receive().subscribe((message: Message) => {
+      this.messages.push(message);
+    });
   }
 
   loggedInUser = (): User => {
@@ -46,23 +50,7 @@ export class ChatComponent implements OnInit, ChatListener {
   }
 
   getMessages = (): Message[] => {
-    return this.messageService.retrieveMessages(this.selectedRecentMessagedUser.getId());
-  }
-
-  onRecievingMessage(message: Message) {
-    message.setMine(false);
-    this.messages.push(message);
-    this.scrollBottom();
-  }
-
-  send = () => {
-    const senderId: number = this.loggedInUser().getId();
-    const receiverId: number = this.selectedRecentMessagedUser.getId();
-    const msg: Message = new Message(new Date().getTime(), this.messageText, senderId, receiverId, true,);
-    this.messages.push(msg);
-    this.scrollBottom();
-    this.socketService.sendMessage(this.messageText);
-    this.messageText = '';
+    return this.messageService.retrieveMessages(this.selectedRecentChat.getUser().getId());
   }
 
   private isSameMessage(message: Message, newMessage: Message): boolean {

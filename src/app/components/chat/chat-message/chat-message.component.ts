@@ -1,4 +1,5 @@
-import { RecentlyMessagedUser } from './../../../models/recent-messaged-users';
+import { ChatService } from './../../../services/chat.service';
+import { RecentChat } from '../../../models/recent-chat';
 import { MessageService } from './../../../services/message.service';
 import { Component, Input } from "@angular/core";
 import { Message } from "src/app/models/message";
@@ -13,24 +14,24 @@ import { LoggedInUserService } from "src/app/services/logged-in-user.service";
 })
 export class ChatMessageComponent {
 
-  @Input() message: Message  = <Message>{};
+  @Input() message: Message = <Message>{};
   @Input() previousMessage: Message = <Message>{};
   @Input() allowsReply = false;
   loggedInUser: User = <User>{};
-  receiver: RecentlyMessagedUser = <RecentlyMessagedUser>{};
+  receiver: RecentChat = <RecentChat>{};
 
-  constructor(public loggedInUserService: LoggedInUserService, public messageService: MessageService) { }
+  constructor(public loggedInUserService: LoggedInUserService, public chatService: ChatService, public messageService: MessageService) { }
 
   ngOnInit() {
     this.loggedInUser = this.getUser();
     this.receiver = this.getReceiver();
-    this.messageService.onRecentMessageUserSelection.subscribe((rmu: RecentlyMessagedUser) => {
+    this.chatService.onRecentChatSelection.subscribe((recentChat: RecentChat) => {
       this.receiver = this.getReceiver();
     });
   }
 
-  getReceiver(): RecentlyMessagedUser {
-    return this.messageService.getSelectedRecentMessageUser();
+  getReceiver(): RecentChat {
+    return this.chatService.getSelectedRecentChat();
   }
 
   getUser(): User {
