@@ -1,9 +1,7 @@
-<mat-toolbar color="primary" fxLayout="row">
-
-    <div mat-card-avatar fxLayoutAlign="start center" fxFlex="10">
-        <img src="{{selectedRecentChat.getUser().getAvatar()}}" alt="{{selectedRecentChat.getUser().getAvatar()}}" style="width:50px;height:50px;"></div>
-    <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle>-->
-    <div fxLayoutAlign='start center'>
-        <mat-title>{{selectedRecentChat.getUser().getFullName()}}</mat-title>
-    </div>
-</mat-toolbar>
+<mat-card style="border-radius: 0px 0px 0px 0px;padding: 5px 0px 10px 5px;">
+    <mat-card-header>
+        <img mat-card-avatar src="{{selectedRecentChat.getUser().getAvatar()}}" alt="{{selectedRecentChat.getUser().getAvatar()}}" style="width:50px;height:50px;">
+        <mat-card-title>{{selectedRecentChat.getUser().getFullName()}}</mat-card-title>
+        <mat-card-subtitle>{{subtitle}}</mat-card-subtitle>
+    </mat-card-header>
+</mat-card>

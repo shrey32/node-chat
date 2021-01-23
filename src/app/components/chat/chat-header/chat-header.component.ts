@@ -6,11 +6,13 @@ import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-chat-header',
-  templateUrl: 'chat-header.component.html'
+  templateUrl: 'chat-header.component.html',
+  styleUrls: ['chat-header.component.scss']
 })
 export class ChatHeaderComponent {
 
   selectedRecentChat: RecentChat = <RecentChat>{};
+  subtitle: string = '';
 
   constructor(
     public messageService: MessageService,
@@ -22,6 +24,15 @@ export class ChatHeaderComponent {
     this.chatService.onRecentChatSelection.subscribe((recentChat: RecentChat) => {
       this.selectedRecentChat = recentChat;
     });
+
+    this.chatService.receiveTyping().subscribe((data: any) => {
+      this.subtitle = 'Typing...';
+    });
+
+    this.chatService.receiveDeleting().subscribe((data: any) => {
+      setTimeout(() => this.subtitle = '',1000);
+    });
+
   }
 
 }

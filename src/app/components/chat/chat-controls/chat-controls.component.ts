@@ -44,7 +44,7 @@ export class ChatControlsComponent implements OnInit {
         throttleTime(1400)
       )
       .subscribe(data => {
-        //this.chatService.sendIsTyping(this.chatId).then();
+        this.chatService.sendTyping(this.getEvent());
       });
 
     this.messageControl.valueChanges
@@ -53,8 +53,12 @@ export class ChatControlsComponent implements OnInit {
         debounceTime(1500)
       )
       .subscribe(data => {
-        //this.chatService.deleteIsTyping(this.chatId).then();
+        this.chatService.sendDeleting(this.getEvent());
       });
+  }
+
+  getEvent = (): any => {
+    return { receiverId: this.selectedRecentChat.getUser().getId(), senderId: this.loggedInUser.getId() };
   }
 
   submit(): void {

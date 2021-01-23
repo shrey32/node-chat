@@ -1,10 +1,8 @@
 import { ChatService } from './../../services/chat.service';
 import { RecentChat } from '../../models/recent-chat';
-import { ChatListener } from './../../models/chat.listener';
-import { SocketService } from 'src/app/services/socket.service';
 import { MessageService } from './../../services/message.service';
 import { LoggedInUserService } from './../../services/logged-in-user.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Message } from 'src/app/models/message';
 import { Moment } from 'moment';
 import { User } from 'src/app/models/user';
@@ -30,7 +28,7 @@ export class ChatComponent implements OnInit {
 
   ngOnInit() {
     this.init();
-    this.chatService.onRecentChatSelection.subscribe((recentChat: RecentChat) => {
+    this.chatService.onRecentChatSelection.subscribe(() => {
       this.init();
     });
   }
@@ -42,7 +40,16 @@ export class ChatComponent implements OnInit {
     this.messages = this.getMessages();
     this.chatService.receive().subscribe((message: Message) => {
       this.messages.push(message);
+      this.scrollBottom();
     });
+    this.chatService.onSend.subscribe((message: Message) => {
+      this.messages.push(message);
+      this.scrollBottom();
+    });
+  }
+
+  private scrollBottom(): void {
+    setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 500);
   }
 
   loggedInUser = (): User => {
@@ -53,19 +60,9 @@ export class ChatComponent implements OnInit {
     return this.messageService.retrieveMessages(this.selectedRecentChat.getUser().getId());
   }
 
-  private isSameMessage(message: Message, newMessage: Message): boolean {
-    return (
-      message.getMessage() === newMessage.getMessage() &&
-      message.getId() === newMessage.getId() &&
-      message.createdAt.isSame(newMessage.createdAt)
-    );
-  }
 
   trackByCreated = (message: Message): Moment => {
     return message.createdAt;
   }
 
-  private scrollBottom() {
-    setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 500);
-  }
 }

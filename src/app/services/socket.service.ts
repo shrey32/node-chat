@@ -9,8 +9,9 @@ import { Observable } from 'rxjs';
 export class SocketService {
 
   private socket: any;
-  private receiver: Observable<Message>;
-  @Output() onSend: EventEmitter<Message> = new EventEmitter<Message>();
+  private receiver: Observable<Message> = <Observable<Message>>{};
+  private typingObservable: Observable<any> = <Observable<any>>{};
+  private deletingObservable: Observable<any> = <Observable<any>>{};
 
   constructor(public loggedInUserService: LoggedInUserService) {
   }
@@ -22,21 +23,49 @@ export class SocketService {
     });
 
     this.receiver = new Observable<Message>(observer => {
-      this.socket.on('receive_message', (message: Message) => {
-        console.log("received", message);
-        observer.next(message);
+      this.socket.on('receive_message', (msg: any) => {
+        console.log("received", msg);
+        const msgObj: Message = new Message(msg.id, msg.message, msg.senderId, msg.receiverId, false);
+        observer.next(msgObj);
       });
     });
 
+    this.typingObservable = new Observable<any>(observer => {
+      this.socket.on('typing_to', (data: any) => {
+        observer.next(data);
+      });
+    });
+
+    this.deletingObservable = new Observable<any>(observer => {
+      this.socket.on('deleting_to', (data: any) => {
+        observer.next(data);
+      });
+    });
   }
 
   receive = (): Observable<Message> => {
     return this.receiver;
   }
 
-  send = (message: Message): void => {
+  send = (message: Message, onSend: EventEmitter<Message>): void => {
     this.socket.emit('send_message', message);
-    this.onSend.emit(message);
+    onSend.emit(message);
+  }
+
+  receiveTyping = (): Observable<any> => {
+    return this.typingObservable;
+  }
+
+  receiveDeleting = (): Observable<any> => {
+    return this.typingObservable;
+  }
+
+  sendTyping = (event: any): void => {
+    this.socket.emit('typing_from', event);
+  }
+
+  sendDeleting = (event: any): void => {
+    this.socket.emit('deleting_from', event);
   }
 
 }

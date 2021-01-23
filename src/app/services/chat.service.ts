@@ -12,6 +12,7 @@ import { Message } from '../models/message';
 export class ChatService {
 
   @Output() onRecentChatSelection: EventEmitter<RecentChat> = new EventEmitter();
+  @Output() onSend: EventEmitter<Message> = new EventEmitter<Message>();
 
   recentChat: RecentChat = <RecentChat>{};
 
@@ -27,15 +28,31 @@ export class ChatService {
     return this.socketService.receive();
   }
 
+  receiveTyping = (): Observable<any> => {
+    return this.socketService.receiveTyping();
+  }
+
+  receiveDeleting = (): Observable<any> => {
+    return this.socketService.receiveDeleting();
+  }
+
   send = (message: Message): void => {
-    this.socketService.send(message);
+    this.socketService.send(message, this.onSend);
+  }
+
+  sendTyping = (data: any): void => {
+    this.socketService.sendTyping(data);
+  }
+
+  sendDeleting = (data: any): void => {
+    this.socketService.sendDeleting(data);
   }
 
   getRecentChatList = (loggedInUserId?: number, limit?: number): RecentChat[] => {
     const recentChatList: RecentChat[] = [];
     const users: User[] = this.userService.getUsers();
     for (let user of users) {
-      recentChatList.push(new RecentChat(user, <Message>{}));
+      recentChatList.push(new RecentChat(user, Message.blankMessage()));
     }
     return recentChatList
   }

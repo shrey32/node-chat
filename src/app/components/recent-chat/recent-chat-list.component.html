@@ -1,21 +1,18 @@
-<div fxLayout="column" style="border:1px solid rgba(255, 255, 255, 0.12);">
+<div fxLayout="column">
 
-    <div fxLayoutAlign="center center" style="background:#c2185b;">
+    <!--<div fxLayoutAlign="center center" style="background:#c2185b;">
         <mat-label>Recent Messages</mat-label>
-    </div>
+    </div>-->
 
-    <div matRipple *ngFor="let recentChat of recentChatList" style="margin-top:5px;">
-        <div fxLayout="row" (click)="onSelect(recentChat)" style="margin-bottom:5px;">
-            <div fxFlex="3"></div>
-            <div fxFlex="15">
-                <div mat-card-avatar fxLayoutAlign="start center">
-                    <img src="{{recentChat.getUser().getAvatar()}}" alt="{{recentChat.getUser().getAvatar()}}" style="width:50px;height:50px;"></div>
+    <div matRipple *ngFor="let recentChat of recentChatList">
+        <mat-card fxLayoutAlign="start center" (click)="onSelect(recentChat)" style="border-radius: 0px 0px 0px 0px;">
+            <mat-card-header>
+                <img mat-card-avatar src="{{recentChat.getUser().getAvatar()}}" alt="{{recentChat.getUser().getAvatar()}}" style="width:50px;height:50px;">
                 <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle>-->
-            </div>
-            <div fxLayoutAlign='start center'>
-                <mat-title>{{recentChat.getUser().getFullName()}}</mat-title>
-            </div>
-        </div>
+                <mat-card-title>{{recentChat.getUser().getFullName()}}</mat-card-title>
+                <mat-card-subtitle>{{lastMessage(recentChat)}}</mat-card-subtitle>
+            </mat-card-header>
+        </mat-card>
         <mat-divider></mat-divider>
     </div>
     <div fxLayoutAlign="center center" color="primary">

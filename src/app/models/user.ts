@@ -45,5 +45,8 @@ export class User {
     return this.status;
   }
 
+  static blankUser = (): User => {
+    return new User(-1, '', '');
+  }
 
 }

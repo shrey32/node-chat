@@ -11,18 +11,6 @@ app.get('/', (req, res) => {
     res.send('<h1>Insta Chat</h1>')
 })
 
-/*io.on('connection', (socket) => {
-    console.log(socket.toString() + ' a user connected')
-
-    socket.on('message', (data) => {
-        socket.broadcast.emit('message', data)
-    })
-
-    socket.on('disconnect', () => {
-        console.log('user disconnected')
-    })
-})*/
-
 io.on('connection', socket => {
 
     // Get the chatID of the user and join in a room of the same chatID
@@ -45,7 +33,24 @@ io.on('connection', socket => {
 
         // Send message to only that particular room
         socket.in(receiverId + '').emit('receive_message', message)
-    })
+    });
+
+    //Typing event
+    socket.on('typing_from', event => {
+        console.log('typing from...')
+        receiverId = event.receiverId
+            // Send message to only that particular room
+        socket.in(receiverId + '').emit('typing_to', event)
+    });
+
+    //deleting event
+    socket.on('deleting_from', event => {
+        console.log('deleting from...')
+        receiverId = event.receiverId
+            // Send message to only that particular room
+        socket.in(receiverId + '').emit('deleting_to', event)
+    });
+
 })
 
 http.listen(3000, () => {

@@ -1,3 +1,4 @@
+import { LoggedInUserService } from 'src/app/services/logged-in-user.service';
 import { Injectable } from "@angular/core";
 import { User } from "../models/user";
 
@@ -9,13 +10,19 @@ export class UserService {
 
   private userList: User[] = [];
 
-  constructor() {
+  constructor(public loggedInUserService: LoggedInUserService) {
 
   }
 
   private fetchUsers = (): void => {
-    const user1: User = new User(12345, 'Adam', 'Driver');
-    user1.setAvatar('../../assets/adam_driver.jpg');
+    let user1: User;
+    if (this.loggedInUser().getId() == 1234) {
+      user1 = new User(12345, 'Adam', 'Driver');
+      user1.setAvatar('../../assets/adam_driver.jpg');
+    } else {
+      user1 = new User(1234, 'John', 'Doe');
+      user1.setAvatar('../../assets/john_doe.jpg');
+    }
     const user2: User = new User(123456, 'Tom', 'Hanks');
     user2.setAvatar('../../assets/tom_hanks.jpg');
     const user3: User = new User(123457, 'Robert', 'Di Nero');
@@ -28,6 +35,10 @@ export class UserService {
   getUsers = (): User[] => {
     this.fetchUsers();
     return this.userList;
+  }
+
+  private loggedInUser = (): User => {
+    return this.loggedInUserService.getLoggedInUser();
   }
 
 }

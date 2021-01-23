@@ -11,9 +11,9 @@ export class Message {
   private receiverId: number;
   private time: Date;
   public createdAt: Moment;
-  public attachments:[] = [];
+  public attachments: [] = [];
 
-  constructor(id:number,message: string, senderId: number, receiverId: number, mine: boolean) {
+  constructor(id: number, message: string, senderId: number, receiverId: number, mine: boolean) {
     this.id = id;
     this.message = message;
     this.senderId = senderId;
@@ -58,4 +58,9 @@ export class Message {
   getReceiverId = (): number => {
     return this.receiverId;
   }
+
+  static blankMessage = (): Message => {
+    return new Message(-1, '', -1, -1, false);
+  }
+
 }

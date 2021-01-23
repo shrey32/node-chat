@@ -5,6 +5,7 @@ export class RecentChat {
 
   private user: User = <User>{};
   private lastMessage: Message = <Message>{};
+  private typingStatus: string = '';
 
   constructor(user: User, lastMessage: Message) {
     this.user = user;
@@ -17,6 +18,22 @@ export class RecentChat {
 
   getLastMessage = (): Message => {
     return this.lastMessage;
+  }
+
+  setLastMessage = (message: Message): void => {
+    this.lastMessage = message;
+  }
+
+  setTypingStatus = (typingStatus: string): void => {
+    this.typingStatus = typingStatus;
+  }
+
+  getTypingStatus = (): string => {
+    return this.typingStatus;
+  }
+
+  static blankRecentChat = (): RecentChat => {
+    return new RecentChat(User.blankUser(), Message.blankMessage());
   }
 
 }

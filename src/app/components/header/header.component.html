@@ -1,15 +1,14 @@
-<mat-toolbar color="primary" fxLayout="row">
-    <div fxFlex="60">
-        <div mat-card-avatar fxLayoutAlign="start center" fxFlex="10">
-            <img src="{{loggedInUser.getAvatar()}}" alt="{{loggedInUser.getAvatar()}}" style="width:50px;height:50px;"></div>
-        <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle>-->
-        <div fxLayoutAlign='start center'>
-            <mat-title>{{loggedInUser.getFullName()}}</mat-title>
+<mat-toolbar class="app-navbar" color="primary">
+
+    <img mat-card-avatar class="app-angular-logo" src="{{loggedInUser.getAvatar()}}" alt="{{loggedInUser.getAvatar()}}" style="width:50px;height:50px;">
+    <span>{{loggedInUser.getFullName()}}</span>
+    <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle>-->
+
+    <div class="right">
+        <div fxFlex="1 1 auto" fxLayout="row" fxLayoutAlign="flex-end center">
+            <button mat-icon-button>
+        <mat-icon>search</mat-icon>
+        </button>
         </div>
-    </div>
-    <div fxFlex='40' fxLayoutAlign="end center">
-        <button mat-icon-button aria-label="Example icon-button with heart icon">
-<mat-icon>search</mat-icon>
-</button>
     </div>
 </mat-toolbar>
