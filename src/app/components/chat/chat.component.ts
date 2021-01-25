@@ -38,9 +38,14 @@ export class ChatComponent implements OnInit {
     this.senderName = this.loggedInUser().getFullName();
     this.receiverName = this.selectedRecentChat.getUser().getFullName();
     this.messages = this.getMessages();
+    this.messages.forEach(msg => {
+      msg.isRead = true;
+    });
     this.chatService.receive().subscribe((message: Message) => {
-      this.messages.push(message);
-      this.scrollBottom();
+      if (message.getSenderId() == this.selectedRecentChat.getUser().getId()) {
+        this.messages.push(message);
+        this.scrollBottom();
+      }
     });
     this.chatService.onSend.subscribe((message: Message) => {
       this.messages.push(message);

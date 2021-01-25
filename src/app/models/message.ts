@@ -12,6 +12,7 @@ export class Message {
   private time: Date;
   public createdAt: Moment;
   public attachments: [] = [];
+  public isRead: boolean = false;
 
   constructor(id: number, message: string, senderId: number, receiverId: number, mine: boolean) {
     this.id = id;

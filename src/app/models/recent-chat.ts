@@ -4,24 +4,15 @@ import { User } from './user';
 export class RecentChat {
 
   private user: User = <User>{};
-  private lastMessage: Message = <Message>{};
+  private newMessages: Message[] = [];
   private typingStatus: string = '';
 
-  constructor(user: User, lastMessage: Message) {
+  constructor(user: User) {
     this.user = user;
-    this.lastMessage = lastMessage;
   }
 
   getUser = (): User => {
     return this.user;
-  }
-
-  getLastMessage = (): Message => {
-    return this.lastMessage;
-  }
-
-  setLastMessage = (message: Message): void => {
-    this.lastMessage = message;
   }
 
   setTypingStatus = (typingStatus: string): void => {
@@ -32,8 +23,16 @@ export class RecentChat {
     return this.typingStatus;
   }
 
+  setNewMessages = (newMessages: Message[]): void => {
+    this.newMessages = newMessages;
+  }
+
+  getNewMessages = (): Message[] => {
+    return this.newMessages;
+  }
+
   static blankRecentChat = (): RecentChat => {
-    return new RecentChat(User.blankUser(), Message.blankMessage());
+    return new RecentChat(User.blankUser());
   }
 
 }

@@ -26,13 +26,14 @@ export class ChatHeaderComponent {
     });
 
     this.chatService.receiveTyping().subscribe((data: any) => {
-      this.subtitle = 'Typing...';
+      if (data.senderId == this.selectedRecentChat.getUser().getId())
+        this.subtitle = 'Typing...';
     });
 
     this.chatService.receiveDeleting().subscribe((data: any) => {
-      setTimeout(() => this.subtitle = '',1000);
+      if (data.senderId == this.selectedRecentChat.getUser().getId())
+        setTimeout(() => this.subtitle = '', 1000);
     });
-
   }
 
 }

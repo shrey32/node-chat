@@ -11,6 +11,7 @@ export class User {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
+    this.avatar = '../../assets/account.png';
   }
 
   getFirstName = (): string => {

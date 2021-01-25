@@ -52,7 +52,7 @@ export class ChatService {
     const recentChatList: RecentChat[] = [];
     const users: User[] = this.userService.getUsers();
     for (let user of users) {
-      recentChatList.push(new RecentChat(user, Message.blankMessage()));
+      recentChatList.push(new RecentChat(user));
     }
     return recentChatList
   }

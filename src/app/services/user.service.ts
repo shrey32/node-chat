@@ -1,6 +1,7 @@
 import { LoggedInUserService } from 'src/app/services/logged-in-user.service';
 import { Injectable } from "@angular/core";
 import { User } from "../models/user";
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -35,6 +36,12 @@ export class UserService {
   getUsers = (): User[] => {
     this.fetchUsers();
     return this.userList;
+  }
+
+  getUserDetailsById = (userId: number): Observable<User> => {
+    return new Observable<any>(observer => {
+      observer.next(new User(userId, "New User", "New User"));
+    });
   }
 
   private loggedInUser = (): User => {
