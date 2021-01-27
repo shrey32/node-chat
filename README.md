@@ -6,8 +6,9 @@ Project uses NodeJS as a backend server powered by [socket.io](https://socket.io
 - Current Features
 	- One to One Chat
 	- Capturing Typing events	
+  - Offline messages
+	- File sharing
 	- Group Chat (currently working)
-	- File sharing (currently working)
 
 ## Setup
 Run `npm install`
