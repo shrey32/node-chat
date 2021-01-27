@@ -17,9 +17,11 @@ export class SocketService {
   }
 
   init = (): void => {
-    this.socket = io(environment.SOCKET_ENDPOINT, { query: 'chatID=' + this.loggedInUserService.getLoggedInUser().getId() });
+    const userId = this.loggedInUserService.getLoggedInUser().getId();
+    this.socket = io(environment.SOCKET_ENDPOINT, { query: 'userId=' + userId });
     this.socket.on("connect", () => {
-      console.log("connected to the chat server", +this.socket.id)
+      console.log("connected to the chat server", this.socket.id);
+      this.socket.emit('send_message', {message:'offline',senderId:userId,receiverId:userId});
     });
 
     this.receiver = new Observable<Message>(observer => {
